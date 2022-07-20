@@ -21,7 +21,7 @@ body {
 }
 
 .input {
-    border: 2px solid #19bf7d;
+    border: 2px solid #438cf1;
     outline: none;
     background: none;
     border-radius: 50px;
@@ -35,7 +35,7 @@ body {
 .button {
     border: none;
     outline: none;
-    background: #19bf7d;
+    background: #438cf1;
     font-size: 20px;
     align-items: center;
     color: white;
