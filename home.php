@@ -42,7 +42,12 @@
 		<h2>DU College Predictor</h2><br>
 		<form method="post" action="home.php">
 			<div id="center">
-				<input class="ip" type="text" name="stream" placeholder="Please mention your stream(Sci/Com/Arts)"><br><br>
+				<label>Please select your stream: </label><br>
+				<select class="ip" type="text" name="stream">
+					<option value="Science">Science</option>
+					<option value="Commerce">Commerce</option>
+					<option value="Arts">Arts</option>
+				</select><br><br>
 				<h3>Please enter marks in top 5 subjects begining with maximum marks</h3>
 				<input class="ip" type="number" name="subject1" placeholder="Subject 1" required><br><br>
 				<input class="ip" type="number" name="subject2" placeholder="Subject 2" required><br><br>
@@ -74,114 +79,67 @@
 			$percentage = ($subject1 + $subject2 + $subject3 + $subject4 + $subject5) / 5;
 			echo "<div class='background'>";
 			echo "<h2>Predicted Colleges</h2>";
-			if ($percentage <= 60)
+			if ($percentage <= 60) {
 				echo "Colleges won't accept your application";
-			else if ($stream == 'Sci') {
-				if ($percentage >= 98) {
-					echo "You are eligible to apply for the folowing colleges:<br>";
-					echo "1. St. Stephen's College<br>";
-					echo "2. Miranda House<br>";
-					echo "3. Hindu College<br>";
-					echo "4. Sri Venkateswara College<br>";
-					echo "5. Hansraj College<br>";
+				echo "You will have to wait for colleges to reduce their cut-offs:<br>";
+			} else {
+				$link = mysqli_connect("localhost", "root", "");
+				if (mysqli_connect_errno()) {
+					printf("Connect failed: %s\n", mysqli_connect_error());
+					exit();
 				}
-				if ($percentage >= 94 && $percentage < 98) {
-					echo "You are eligible to apply for the folowing colleges:<br>";
-					echo "1. Ramjas College<br>";
-					echo "2. Gargi College<br>";
-					echo "3. Acharya Narendra Dev College<br>";
-					echo "4. Deen Dayal Upadhyay College<br>";
-					echo "5. Kirori Mal College<br>";
+				mysqli_select_db($link, "college_predictor");
+				$results = [];
+				if ($stream == 'Science') {
+					if ($percentage >= 98) {
+						$results = mysqli_query($link, "select Name from colleges where stream = 'Science' and Level = 'L1'") or die("failed to connect" . mysqli_connect_error());
+					} else if ($percentage >= 94 && $percentage < 98) {
+						$results = mysqli_query($link, "select Name from colleges where stream = 'Science' and Level = 'L2'") or die("failed to connect" . mysqli_connect_error());
+					} else if ($percentage >= 90 && $percentage < 94) {
+						$results = mysqli_query($link, "select Name from colleges where stream = 'Science' and Level = 'L3'") or die("failed to connect" . mysqli_connect_error());
+					} else if ($percentage >= 85 && $percentage < 90) {
+						$results = mysqli_query($link, "select Name from colleges where stream = 'Science' and Level = 'L4'") or die("failed to connect" . mysqli_connect_error());
+					} else if ($percentage >= 75 && $percentage < 85) {
+						$results = mysqli_query($link, "select Name from colleges where stream = 'Science' and Level = 'L5'") or die("failed to connect" . mysqli_connect_error());
+					} else if ($percentage > 60  && $percentage < 75) {
+						$results = [];
+						echo "You will have to wait for colleges to reduce their cut-offs!<br>";
+					}
+				} else if ($stream == 'Commerce') {
+					if ($percentage >= 98) {
+						$results = mysqli_query($link, "select Name from colleges where stream = 'Commerce' and Level = 'L1'") or die("failed to connect" . mysqli_connect_error());
+					} else if ($percentage >= 94 && $percentage < 98) {
+						$results = mysqli_query($link, "select Name from colleges where stream = 'Commerce' and Level = 'L2'") or die("failed to connect" . mysqli_connect_error());
+					} else if ($percentage >= 90 && $percentage < 94) {
+						$results = mysqli_query($link, "select Name from colleges where stream = 'Commerce' and Level = 'L3'") or die("failed to connect" . mysqli_connect_error());
+					} else if ($percentage >= 85 && $percentage < 90) {
+
+						$results = mysqli_query($link, "select Name from colleges where stream = 'Commerce' and Level = 'L4'") or die("failed to connect" . mysqli_connect_error());
+					} else if ($percentage > 60 && $percentage < 85) {
+						$results = [];
+						echo "You will have to wait for colleges to reduce their cut-offs!<br>";
+					}
+				} else if ($stream == 'Arts') {
+					if ($percentage >= 98) {
+						$results = mysqli_query($link, "select Name from colleges where stream = 'Arts' and Level = 'L1'") or die("failed to connect" . mysqli_connect_error());
+					}
+					if ($percentage >= 94 && $percentage < 98) {
+						$results = mysqli_query($link, "select Name from colleges where stream = 'Arts' and Level = 'L2'") or die("failed to connect" . mysqli_connect_error());
+					}
+					if ($percentage >= 90 && $percentage < 94) {
+						$results = mysqli_query($link, "select Name from colleges where stream = 'Arts' and Level = 'L3'") or die("failed to connect" . mysqli_connect_error());
+					} else if ($percentage > 60 && $percentage < 90) {
+						$results = [];
+						echo "You will have to wait for colleges to reduce their cut-offs!<br>";
+					}
 				}
-				if ($percentage >= 90 && $percentage < 94) {
-					echo "You are eligible to apply for the folowing colleges:<br>";
-					echo "1. Kalindi College<br>";
-					echo "2. Atma Ram Sanatan Dharma College<br>";
-					echo "3. Maharaja Agrasen College<br>";
-					echo "4. Bhaskraycharya College Of Applied Sciences<br>";
-					echo "5. Keshav Mahavidyalaya<br>";
+				echo '<ol>';
+				foreach ($results as $row) {
+					echo '<li>';
+					echo ($row['Name']);
+					echo '</li>';
 				}
-				if ($percentage >= 85 && $percentage < 90) {
-					echo "You are eligible to apply for the folowing colleges:<br>";
-					echo "1. Dayal Singh College<br>";
-					echo "2. Indraprastha College<br>";
-					echo "3. Sri Guru Tegh Bahadur Khalsa College<br>";
-					echo "4. Ram Lal Anand College<br>";
-					echo "5. Ramanujan College<br>";
-				}
-				if ($percentage >= 75 && $percentage < 85) {
-					echo "You are eligible to apply for the folowing colleges:<br>";
-					echo "1. College of Vocational Studies<br>";
-					echo "2. Mata Sundari College<br>";
-					echo "3. P.G.D.A.V College<br>";
-					echo "4. Shaheed Rajguru College<br>";
-					echo "5. Shyama Prasad Mukherjee College<br>";
-				}
-				if ($percentage >= 75 && $percentage < 85)
-					echo "You will have to wait for colleges to reduce their cut-offs!<br>";
-			} else if ($stream == 'Com') {
-				if ($percentage >= 98) {
-					echo "You are eligible to apply for the folowing colleges:<br>";
-					echo "1. Shri Ram College of Commerce<br>";
-					echo "2. Hindu College<br>";
-					echo "3. Lady Shri Ram College for Women<br>";
-					echo "4. Sri Venkateswara College<br>";
-					echo "5. Atma Ram Sanatan Dharm College<br>";
-				}
-				if ($percentage >= 94 && $percentage < 98) {
-					echo "You are eligible to apply for the folowing colleges:<br>";
-					echo "1. Deen Dayal Upadhyaya College<br>";
-					echo "2. Hans Raj College<br>";
-					echo "3. Gargi College<br>";
-					echo "4. Acharya Narendra Dev College<br>";
-					echo "5. Daulat Ram College<br>";
-				}
-				if ($percentage >= 90 && $percentage < 94) {
-					echo "You are eligible to apply for the folowing colleges:<br>";
-					echo "1. Jesus and Mary College (JMC)<br>";
-					echo "2. Ramjas College<br>";
-					echo "3. Delhi College of Arts and Commerce (DCAC)<br>";
-					echo "4. Sri Guru Gobind Singh College of Commerce (SGGS)<br>";
-					echo "5. Kamala Nehru College (KNC)<br>";
-				}
-				if ($percentage >= 85 && $percentage < 90) {
-					echo "You are eligible to apply for the folowing colleges:<br>";
-					echo "1. Gargi college<br>";
-					echo "2. Motilal Nehru College<br>";
-					echo "3. Deen Dayal Upadhyaya college<br>";
-					echo "4. Indraprastha college<br>";
-					echo "5. Kirori mal college<br>";
-				}
-				if ($percentage > 60 && $percentage < 85)
-					echo "You will have to wait for colleges to reduce their cut-offs!<br>";
-			} else if ($stream == 'Arts') {
-				if ($percentage >= 98) {
-					echo "You are eligible to apply for the folowing colleges:<br>";
-					echo "1. Miranda House<br>";
-					echo "2. Lady Shri Ram College for Women<br>";
-					echo "3. Hindu College<br>";
-					echo "4. St. Stephen's College<br>";
-					echo "5. Hansraj College<br>";
-				}
-				if ($percentage >= 94 && $percentage < 98) {
-					echo "You are eligible to apply for the folowing colleges:<br>";
-					echo "1. Atma Ram Sanatan Dharma College<br>";
-					echo "2. Sri Venkateshwara College<br>";
-					echo "3. Gargi College<br>";
-					echo "4. Kirori Mal College<br>";
-					echo "5. Dayal Singh College<br>";
-				}
-				if ($percentage >= 90 && $percentage < 94) {
-					echo "You are eligible to apply for the folowing colleges:<br>";
-					echo "1. Ramjas College<br>";
-					echo "2. Delhi College of Arts and Commerce (DCAC)<br>";
-					echo "3. Jesus and Mary College<br>";
-					echo "4. Indraprastha College For Women<br>";
-					echo "5. Shivaji College<br>";
-					echo "6. Ramanujan College<br>";
-				}
-				if ($percentage > 60 && $percentage < 90)
-					echo "You will have to wait for colleges to reduce their cut-offs:<br>";
+				echo '</ol>';
 			}
 			echo "</div>";
 		}
