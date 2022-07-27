@@ -49,11 +49,11 @@
 					<option value="Arts">Arts</option>
 				</select><br><br>
 				<h3>Please enter marks in top 5 subjects begining with maximum marks</h3>
-				<input class="ip" type="number" name="subject1" placeholder="Subject 1" required><br><br>
-				<input class="ip" type="number" name="subject2" placeholder="Subject 2" required><br><br>
-				<input class="ip" type="number" name="subject3" placeholder="Subject 3"><br><br>
-				<input class="ip" type="number" name="subject4" placeholder="Subject 4"><br><br>
-				<input class="ip" type="number" name="subject5" placeholder="Subject 5"><br><br>
+				<input class="ip" type="number" name="subject1" placeholder="Subject 1" required min="0" max="100"><br><br>
+				<input class="ip" type="number" name="subject2" placeholder="Subject 2" required min="0" max="100"><br><br>
+				<input class="ip" type="number" name="subject3" placeholder="Subject 3" min="0" max="100"><br><br>
+				<input class="ip" type="number" name="subject4" placeholder="Subject 4" min="0" max="100"><br><br>
+				<input class="ip" type="number" name="subject5" placeholder="Subject 5" min="0" max="100"><br><br>
 				<input class="button" type="submit" name="submit" value="SUBMIT">
 			</div>
 		</form>
