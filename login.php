@@ -8,7 +8,7 @@ session_destroy();
 <html>
 
 <head>
-	<title>College Predictor</title>
+	<title>DU College Predictor</title>
 	<link rel="stylesheet" type="text/css" href="login.css">
 	<link rel="icon" href="logo.png" type="image/x-icon">
 	<link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">

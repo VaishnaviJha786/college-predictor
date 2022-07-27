@@ -7,7 +7,7 @@
 	<link rel="icon" type="x-icon" href="logo.png">
 	<link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<title>College Predictor</title>
+	<title>DU College Predictor</title>
 </head>
 <body>
 	<nav class="navbar sticky-top navbar-expand-sm navbar-dark bg-dark">
